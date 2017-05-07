@@ -1,5 +1,4 @@
 import React from 'react';
-
 import Controls from './Controls'
 import Grid from './Grid'
 
@@ -20,14 +19,15 @@ export default class Game extends React.Component{
 		this.incOpenCellsCounter = this.incOpenCellsCounter.bind(this);
 		this.updateFlagsCounter = this.updateFlagsCounter.bind(this);
 		this.setGrid = this.setGrid.bind(this);
-
+		this.superControl = this.superControl.bind(this);
 
 		this.state = {
+			superstate : false,
 			// size
-			rows : 5,
-			cols : 5,
+			rows : 3,
+			cols : 3,
 			// mines
-			minesCount : 5,
+			minesCount : 1,
 			flagsCount: 0,
 			openCellsCount: 0,
 			status : "playing"   // playing, clear, gameover
@@ -36,6 +36,7 @@ export default class Game extends React.Component{
 
 	componentWillReceiveProps(nextProps) {
 		this.setState({
+			superstate: nextProps.superstate,
 			// size
 		rows : nextProps.row,
 		cols : nextProps.cols,
@@ -61,7 +62,8 @@ export default class Game extends React.Component{
      * @return {[type]} [description]
      */
     checkWin() {
-        if(this.state.minesCount + this.state.openCellsCount >= this.state.rows * this.state.cols){
+
+        if(this.state.rows * this.state.cols - this.state.minesCount === this.state.openCellsCount && this.state.minesCount == this.state.flagsCount){
             this.setState({status: "clear"});
         }
     }
@@ -79,7 +81,10 @@ export default class Game extends React.Component{
      * @return {[type]}        [description]
      */
     updateFlagsCounter(newCount) {
-        this.setState({flagsCount: this.state.flagsCount + newCount});
+    	if (newCount === -1)
+        	this.setState({flagsCount: --this.state.flagsCount });
+        if (newCount === 1)
+        	this.setState({flagsCount: ++this.state.flagsCount });
     }
 
     /**
@@ -87,16 +92,20 @@ export default class Game extends React.Component{
      * @return {[type]} [description]
      */
     incOpenCellsCounter() {
-        this.setState({
-            openCellsCount : this.state.openCellsCount + 1
-        });
+    	this.setState({openCellsCount :++this.state.openCellsCount})
+    	console.log(this.state.openCellsCount)
     }
     /**
      * [reset description]
      * @return {[type]} [description]
      */
     reset() {
-        this.setState({status: "playing", flagsCount: 0, openCellsCount: 0});
+        this.setState({
+        	status: "playing", 
+        	flagsCount: 0, 
+        	openCellsCount: 0, 
+        	superstate: false
+        });
     }
 
     /**
@@ -106,7 +115,23 @@ export default class Game extends React.Component{
      * @param {[type]} _minesCount [description]
      */
     setGrid(_rows,_cols,_minesCount) {
-        this.setState({rows: _rows, cols: _cols, minesCount: _minesCount, openCellsCount: 0, flagsCount: 0, status: "playing"});
+            this.setState({
+        	rows: _rows, 
+        	cols: _cols, 
+        	minesCount: _minesCount, 
+        	openCellsCount: 0, 
+        	flagsCount: 0, 
+        	status: "playing",
+        	superstate: false});
+    }
+
+    /**
+     * 
+     */
+    superControl()
+    {
+    	console.log("update")
+    	this.setState({superstate : true});
     }
 
 	/**
@@ -114,8 +139,9 @@ export default class Game extends React.Component{
 	 * @return {[type]} [description]
 	 */
 	render(){return (
-
-		<div className="warrper">
+		<div>
+		<div className="row">
+			<div className="col-sm-12">
 			<Controls 
 				setGrid={this.setGrid}
 				flagsLeft={this.state.minesCount - this.state.flagsCount} 
@@ -124,9 +150,14 @@ export default class Game extends React.Component{
 				rows={this.state.rows} 
 				cols={this.state.cols}
 				minesCount={this.state.minesCount}
+				superControl={this.superControl}
 			/>
-			<div className="board_container">
+			</div>
+		</div>
+		<div className="row">
+			<div className="col-sm-12">
 				<Grid 
+					loaded={false}
 					rows={this.state.rows} 
 					cols={this.state.cols}
 					openCellsCount={this.state.openCellsCount} 
@@ -136,9 +167,10 @@ export default class Game extends React.Component{
 					updateFlagsCounter={this.updateFlagsCounter}
 					status={this.state.status}
 					flagsCount={this.state.flagsCount}
+					superstate={this.state.superstate}
 				/>
 			</div>
 		</div>
-
+		</div>
 		);}
 }

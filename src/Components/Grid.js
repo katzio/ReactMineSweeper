@@ -1,5 +1,6 @@
 import React from 'react';
-
+import ReactList from 'react-list';
+import Loader from 'react-loader';
 import Row from './Row';
 /**
  * Grid component
@@ -16,16 +17,36 @@ export default class Grid extends React.Component{
 		super(props);
 		this.openCell = this.openCell.bind(this);
 		this.setFlag = this.setFlag.bind(this);
-
-
+		this.renderItem = this.renderItem.bind(this);
+		this.superMan = this.superMan.bind(this);
 		
 		this.state = { 
+			superstate : this.props.superstate,
+			loaded : this.props.loaded,
 			zero_stack : [],
 			grid  : this.build(props) 
 		}
 	}
 
+	/**
+	 * [superMan description]
+	 * @return {[type]} [description]
+	 */
+	superMan(){
+		var _grid = this.state.grid;
 
+		for (var row = 0; row < this.props.rows; row++){
+			for (var col = 0; col < this.props.cols; col++){
+				_grid[row][col].isOpen = true;
+
+		this.setState ({grid: _grid});
+			}
+		}
+	}
+
+	componentDidMount(){
+		this.setState ({loaded: true})
+	}
 	/**
 	 * create a 2D array of cells
 	 * @param  {[type]} props [description]
@@ -91,10 +112,9 @@ export default class Grid extends React.Component{
 	openCell(_cell){	
 		var _grid = this.state.grid;
 		if (!_cell.flagged && this.props.status !== "Game Over"){
-			if (!_cell.isOpen)
-				this.props.incOpenCellsCounter();
 			// show mine incon
 			if (_cell.isMine){
+				this.props.incOpenCellsCounter(); // for reset state
 				for(var row =0; row < this.props.rows; row++) {
 					for(var col = 0; col < this.props.cols; col++) {
 						if (_grid[row][col].isMine)
@@ -103,12 +123,20 @@ export default class Grid extends React.Component{
 				}
 				this.props.gameOver();
 			} else {
+				this.props.incOpenCellsCounter();
 				_grid[_cell.row_id][_cell.col_id].isOpen = true;
 				if (_cell.minesCount === 0){
 					this.openAround(_cell);				
 				}
 			}	
 		}
+		// clear the stack
+		while (this.state.zero_stack.length > 0){
+			var _zero_cell = this.state.zero_stack.pop();
+			this.openAround(_zero_cell);
+		}
+
+
 		this.setState({grid : _grid});
 	}
 
@@ -119,22 +147,19 @@ export default class Grid extends React.Component{
 	 */
 	openAround(_cell){
 		var _grid = this.state.grid;
-		do{
-			for(var row = _cell.row_id - 1; row <= _cell.row_id + 1; row++) {
-				for(var col = _cell.col_id - 1; col <= _cell.col_id + 1; col++) {
-					if (row >= 0 && col >= 0 && this.props.rows > row && this.props.cols > col && !_grid[row][col].isOpen && !_grid[row][col].isMine && !_grid[row][col].flagged)
-						if(_grid[row][col].minesCount === 0)
-							this.state.zero_stack.push(_grid[row][col]);
-						else
-							this.openCell(_grid[row][col]);
+		for(var row = _cell.row_id - 1; row <= _cell.row_id + 1; row++) {
+			for(var col = _cell.col_id - 1; col <= _cell.col_id + 1; col++) {
+				if (row >= 0 && col >= 0 && this.props.rows > row && this.props.cols > col && _grid[row][col] !== _cell && !_grid[row][col].isOpen)
+				{
+					_grid[row][col].isOpen = true;	
+					this.props.incOpenCellsCounter();
+					if(_grid[row][col].minesCount === 0){
+						this.state.zero_stack.push(_grid[row][col]);
+					}
+
 				}
 			}
-			var _zero_cell = this.state.zero_stack.pop();
-			if (_zero_cell !== undefined && !_zero_cell.isMine){
-				_zero_cell.isOpen = true;
-				_cell = _zero_cell;	
-			}
-		} while (this.state.zero_stack.length > 0);
+		}
 	}
 
 	/**
@@ -175,24 +200,22 @@ export default class Grid extends React.Component{
      * @return {[type]}           [description]
      */
     componentWillReceiveProps(nextProps) {
-
-        if(this.props.openCellsCount > nextProps.openCellsCount || this.props.cols !== nextProps.cols || this.props.rows !== nextProps.rows || this.props.minesCount !== nextProps.minesCount){
+    	if(nextProps.superstate)
+    		this.superMan();
+        if((this.props.openCellsCount > nextProps.openCellsCount || this.props.cols !== nextProps.cols || this.props.rows !== nextProps.rows || this.props.minesCount !== nextProps.minesCount) && this.state.loaded === true){
             this.setState({
                 grid : this.build(nextProps),
                 zero_stack : []
             });
         }
-
     }
 
-	/**
-	 * render will take every row and generate Row componenet
-	 * @return {[type]} [description]
-	 */
-	render(){
-		var Rows = this.state.grid.map((row, index) => {
+
+    renderItem(index, key) {
+    	var rows = this.state.grid.map((row, index) => {
             return(
-                <Row 
+                <Row
+                setLoader={this.setLoader} 
                 cells={row} 
                 openCell={this.openCell} 
                 setFlag={this.setFlag} 
@@ -200,11 +223,24 @@ export default class Grid extends React.Component{
                 key={index}/>
             );
         });
+
+    	return <div key={key}>{rows}</div>;
+  	}
+
+	/**
+	 * render will take every row and generate Row componenet
+	 * @return {[type]} [description]
+	 */
+	render(){
 		return (
-				<div className="board">
-					<div className="grid">
-					{Rows}
-					</div>
+				<div className="grid" style={{height: 700}}>
+				<Loader loaded={this.state.loaded}>
+					<ReactList
+					itemRenderer={this.renderItem}
+					length={this.props.rows * this.props.rows.cols}
+					type='uniform'
+					useTranslate3d={true} />
+				</Loader>
 				</div>
 			);
 	}

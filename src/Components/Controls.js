@@ -24,18 +24,18 @@ export default class Controls extends React.Component{
 	 */
 	setStateStyle(){
 
-		if(this.state.status === "clear")
-			return "won"
+		if(this.props.status === "clear")
+			return "btn btn-md btn-success"
 		else if(this.props.status === "Game Over")
-			return "lost"
-		return "playing"
+			return "btn btn-md btn-danger"
+		return "btn btn-md btn-info"
 	}
 	/**
 	 * [setStateText description]
 	 * @param {[type]} state [description]
 	 */
 	setStateText(){
-		if(this.state.status === "clear")
+		if(this.props.status === "clear")
 			return "You have won!"
 		else if(this.props.status === "Game Over")
 			return "You have lost!"
@@ -59,21 +59,47 @@ export default class Controls extends React.Component{
 	}
 
 	render(){
+		var minesPlaceHolder = "Mines: " +this.props.minesCount; 
+		var rowsPlaceHolder = "Rows: " +this.props.rows; 
+		var colsPlaceHolder = "Columns: " +this.props.cols; 
+
 		return (
-			<div className="controls">
-				<lable className="{this.setStateStyle(this.props.status)}">{this.setStateText(this.props.status)}</lable>
-				<label>Flags left: {this.props.flagsLeft}</label>
-				
-				<button onClick={this.props.restBtn}>Reset</button>
-				<label>Rows:</label>
-				<input is type="text" defaultValue={this.props.rows} onChange={this.updateRows}/>
-				<label>Columns:</label>
-				<input is type="text" defaultValue={this.props.cols} onChange={this.updateCols}/>
-				<label>Mines:</label>
-				<input is type="text" defaultValue={this.props.minesCount} onChange={this.updateMines}/>
-				<button onClick={this.update}>Update table</button>
-				
-				
+			<div className="controls row">
+				<div className="col-sm-6">
+					<div className="row">
+						<div className="col-sm-3">
+							<button className={this.setStateStyle(this.props.status)}>{this.setStateText(this.props.status)}</button>
+						</div>
+						<div className="col-sm-3">
+							<button className="btn btn-success" onClick={this.props.superControl}>Superman!</button>
+						</div>
+						<div className="col-sm-3">	
+						<button className="btn btn-primary" type="button"> Flags left: <span className="badge">{this.props.flagsLeft}</span> </button>
+						</div>
+						<div className="col-sm-3">	
+							<button className="btn btn-md btn-warning" onClick={this.props.restBtn}>Reset Game</button>
+						</div>
+					</div>
+				</div>
+				<div className="col-sm-6">
+					<div className="row">
+						<div className="col-sm-3">
+							<span className="sr-only">Rows:</span>
+							<input class="form-control" is type="text" placeholder={rowsPlaceHolder} onChange={this.updateRows}/>
+						</div>
+						<div className="col-sm-3">
+							<span className="sr-only">Columns:</span>
+							<input class="form-control" is type="text" placeholder={colsPlaceHolder} onChange={this.updateCols}/>
+						</div>
+						<div className="col-sm-3">
+							<span className="sr-only">Mines:</span>
+							<input class="form-control" is type="text" placeholder={minesPlaceHolder}  onChange={this.updateMines}/>
+						</div>
+						<div className="col-sm-3">
+							<button className="btn btn-md btn-info" onClick={this.update}>Update Grid Params</button>
+						</div>
+					</div>				
+				</div>	
 			</div>
 			);
 	}

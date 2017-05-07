@@ -45,22 +45,22 @@ export default class Cell extends React.Component{
             }
         }
         else{
-            if (!this.state.flagged)
+            if (!this.state.flagged && !this.state.isOpen)
                 this.props.openCell(this.props.data);
         }
     }
 
     render() {
         if(this.state.isOpen){
-            if(this.state.isMine){return (<div className="square mine"></div>);}
+            if(this.state.isMine){return (<div className="table-cell mine"></div>);}
             else {
                 if (this.state.minesCount === 0){
-                    return (<div className="square activated"></div>);
-                }return (<div className="square activated" is data-neighbors={this.state.minesCount}>{this.state.minesCount}</div>);
+                    return (<div className="table-cell activated"></div>);
+                }return (<div className="table-cell activated" is data-neighbors={this.state.minesCount}>{this.state.minesCount}</div>);
             }
         } 
         else if(this.state.flagged){
-        return (<div className="square flag" onClick={this.clickHandler}></div>);}
-        else{return (<div className="square" onClick={this.clickHandler}></div>);}    
+        return (<div className="table-cell flag" onClick={this.clickHandler}></div>);}
+        else{return (<div className="table-cell" onClick={this.clickHandler}></div>);}    
     }
 }

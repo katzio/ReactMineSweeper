@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "react": "^15.5.4",
+    "react-clusterize": "^0.2.1",
     "react-dom": "^15.5.4"
   },
   "devDependencies": {

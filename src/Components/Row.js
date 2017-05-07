@@ -31,7 +31,7 @@ export default class Row extends React.Component{
 					key={index}/>)
 			});
 		return (
-			<div className="row">
+			<div className="table-row">
 				{Cells}
 			</div>
 		);
