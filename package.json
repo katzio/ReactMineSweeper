@@ -1,7 +1,7 @@
 {
   "name": "react-minesweeper-v2",
   "version": "0.1.0",
-  "homepage": "http://dev.localhost/react-minesweeper-v2/build/",
+  "homepage": "http://akatz.io/projects/minesweeper/",
   "private": true,
   "dependencies": {
     "react": "^15.5.4",

@@ -24,10 +24,10 @@ export default class Game extends React.Component{
 		this.state = {
 			superstate : false,
 			// size
-			rows : 3,
-			cols : 3,
+			rows : 20,
+			cols : 32,
 			// mines
-			minesCount : 1,
+			minesCount : 100,
 			flagsCount: 0,
 			openCellsCount: 0,
 			status : "playing"   // playing, clear, gameover
