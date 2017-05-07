@@ -1,0 +1,183 @@
+/** Design was take from https://github.com/Inclushe/js-minesweeper
+  * look too good...
+ */
+
+@import 'https://fonts.googleapis.com/css?family=Roboto+Mono';
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: inherit;
+}
+
+.title {
+  height: 100px;
+  line-height: 100px;
+  text-align: center;
+}
+
+.board_container {
+  margin-top: 50px;
+  position: absolute;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.board .row {
+  display: flex;
+}
+
+.board div.square {
+  height: 30px;
+  width: 30px;
+  overflow: hidden;
+  margin: 2px;
+  background-color: #fafafa;
+  border-radius: 15%;
+  box-shadow: inset 0px -2px 2px 0px #e8e8e8;
+  transition: 50ms;
+  line-height: 30px;
+  text-align: center;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.board div.square:active {
+  box-shadow: inset 0px 0px 2px 0px #e8e8e8;
+}
+
+.board div.square.activated {
+  background-color: #eee;
+  box-shadow: none;
+}
+
+.board div.square.flag::after {
+  content: '';
+  position: absolute;
+  margin-left: -15px;
+  height: 30px;
+  width: 30px;
+  background-image: url("./flag.png");
+  background-repeat: no-repeat;
+  background-size: 20px 20px;
+  background-position: center;
+}
+
+.board div.square.question::after {
+  content: '?';
+  font-weight: bold;
+  font-size: 25px;
+  color: #2196f3;
+}
+
+.board div.square.mine {
+  background-color: #f44336 !important;
+  box-shadow: none;
+}
+
+.board div.square.mine::after {
+  content: 'X';
+  color: white;
+}
+
+.board div.square[data-neighbors='1'] {
+  color: #03a9f4;
+}
+
+.board div.square[data-neighbors='2'] {
+  color: #1976d2;
+}
+
+.board div.square[data-neighbors='3'] {
+  color: #8bc34a;
+}
+
+.board div.square[data-neighbors='4'] {
+  color: #4caf50;
+}
+
+.board div.square[data-neighbors='5'] {
+  color: #f9a825;
+}
+
+.board div.square[data-neighbors='6'] {
+  color: #f57c00;
+}
+
+.board div.square[data-neighbors='7'] {
+  color: #f44336;
+}
+
+.board div.square[data-neighbors='8'] {
+  color: #9c27b0;
+}
+
+#message {
+  position: absolute;
+  padding-left: 10px;
+  padding-right: 10px;
+  height: 50px;
+  width: auto;
+  background: #eeeeee;
+  line-height: 50px;
+  border-radius: 10px;
+}
+
+#message * {
+  display: inline-block;
+}
+
+#message button {
+  margin-left: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  background-color: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  color: inherit;
+}
+
+#message.lost {
+  background-color: #f44336;
+  color: white;
+}
+
+#message.won {
+  background-color: #81c784;
+  color: white;
+}
+
+
+input[type="text"] {
+    margin-left: 20px;
+    text-align: center;
+}
+
+label {
+    margin-left: 10px;
+}
+
+.controls{
+    margin-bottom: 50px;
+    display: block;
+    width: 1360px;
+    margin: auto;
+    text-align: center;
+
+}
