@@ -1,4 +1,4 @@
-# react-MineSweeper
+# React MineSweeper
 
 ```javascript
  \> npm install
