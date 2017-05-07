@@ -6,7 +6,10 @@
   "dependencies": {
     "react": "^15.5.4",
     "react-clusterize": "^0.2.1",
-    "react-dom": "^15.5.4"
+    "react-dom": "^15.5.4",
+    "react-list": "^0.8.5",
+    "react-loader" : "^2.4.0"
+
   },
   "devDependencies": {
     "react-scripts": "0.9.5"
