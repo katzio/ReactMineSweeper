@@ -12,6 +12,7 @@ export default class Cell extends React.Component{
 	constructor(props) {
 		super(props);
         this.clickHandler = this.clickHandler.bind(this);
+        this.rclickHandler = this.rclickHandler.bind(this);
 
 		this.state = {
             key         : props.data.key,
@@ -38,6 +39,8 @@ export default class Cell extends React.Component{
 
 
     clickHandler(e){
+        e.preventDefault();
+
         if(e.shiftKey){
             // use Grid component
             if(!this.state.isOpen){
@@ -50,6 +53,14 @@ export default class Cell extends React.Component{
         }
     }
 
+    rclickHandler(e){
+        e.preventDefault();
+        // use Grid component
+            if(!this.state.isOpen){
+                this.props.setFlag(this.props.data);
+            }
+    }
+
     render() {
         if(this.state.isOpen){
             if(this.state.isMine){return (<div className="table-cell mine"></div>);}
@@ -60,7 +71,7 @@ export default class Cell extends React.Component{
             }
         } 
         else if(this.state.flagged){
-        return (<div className="table-cell flag" onClick={this.clickHandler}></div>);}
-        else{return (<div className="table-cell" onClick={this.clickHandler}></div>);}    
+        return (<div className="table-cell flag" onContextMenu={this.rclickHandler} onClick={this.clickHandler}></div>);}
+        else{return (<div className="table-cell" onContextMenu={this.rclickHandler} onClick={this.clickHandler}></div>);}    
     }
 }

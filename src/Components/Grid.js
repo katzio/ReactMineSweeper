@@ -149,7 +149,7 @@ export default class Grid extends React.Component{
 		var _grid = this.state.grid;
 		for(var row = _cell.row_id - 1; row <= _cell.row_id + 1; row++) {
 			for(var col = _cell.col_id - 1; col <= _cell.col_id + 1; col++) {
-				if (row >= 0 && col >= 0 && this.props.rows > row && this.props.cols > col && _grid[row][col] !== _cell && !_grid[row][col].isOpen)
+				if (row >= 0 && col >= 0 && this.props.rows > row && this.props.cols > col && _grid[row][col] !== _cell && !_grid[row][col].isOpen && !_grid[row][col].flagged)
 				{
 					_grid[row][col].isOpen = true;	
 					this.props.incOpenCellsCounter();
