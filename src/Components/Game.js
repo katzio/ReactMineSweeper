@@ -63,8 +63,6 @@ export default class Game extends React.Component{
      */
     checkWin() {
     	var cells_to_open = this.state.rows * this.state.cols - this.state.minesCount;
-    	console.log(this.state.openCellsCount)
-    	console.log(this.state.flagsCount)
     	if (cells_to_open == this.state.openCellsCount && this.state.flagsCount == this.state.minesCount){
        		this.setState({status: "clear"});
     	}
