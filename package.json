@@ -8,11 +8,15 @@
     "react-clusterize": "^0.2.1",
     "react-dom": "^15.5.4",
     "react-list": "^0.8.5",
-    "react-loader" : "^2.4.0"
-
+    "react-loader": "^2.4.0"
   },
   "devDependencies": {
-    "react-scripts": "0.9.5"
+    "chai": "^3.5.0",
+    "enzyme": "^2.8.2",
+    "mocha": "^3.3.0",
+    "react-dom": "^15.5.4",
+    "react-scripts": "0.9.5",
+    "react-test-renderer": "^15.5.4"
   },
   "scripts": {
     "start": "react-scripts start",
