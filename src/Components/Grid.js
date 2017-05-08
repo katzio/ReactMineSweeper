@@ -110,7 +110,6 @@ export default class Grid extends React.Component{
 	 * @return {[type]}       [description]
 	 */
 	openCell(_cell){	
-		console.log(this.props.openCellsCount);
 		var _grid = this.state.grid;
 		if (!_cell.flagged && this.props.status !== "Game Over"){
 			// show mine incon
@@ -203,8 +202,9 @@ export default class Grid extends React.Component{
     componentWillReceiveProps(nextProps) {
     	if(nextProps.superstate)
     		this.superMan();
-        if((this.props.openCellsCount > nextProps.openCellsCount || this.props.cols !== nextProps.cols || this.props.rows !== nextProps.rows || this.props.minesCount !== nextProps.minesCount) && this.state.loaded == true){
+        if(this.props.openCellsCount > nextProps.openCellsCount || this.props.cols !== nextProps.cols || this.props.rows !== nextProps.rows || this.props.minesCount !== nextProps.minesCount){
             this.setState({
+            	loaded : true,
                 grid : this.build(nextProps),
                 zero_stack : []
             });

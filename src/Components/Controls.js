@@ -58,6 +58,8 @@ export default class Controls extends React.Component{
 
 			if (this.state.rows > 0 && this.state.cols > 0 && this.state.minesCount >= 0){
 				if (this.state.minesCount <= this.state.rows * this.state.cols ){
+					if (this.state.rows * this.state.cols  > 10000)
+						alert("It's will take a sec or 2 (or 10)\nbut it works, be patient :)")
 					this.props.setGrid(this.state.rows, this.state.cols, this.state.minesCount);
 				}
 				else {
