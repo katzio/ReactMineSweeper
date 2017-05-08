@@ -2,6 +2,6 @@
 
 ```javascript
  \> npm install
- \> npm start 
+ \> npm start / npm test
  ```
 http://akatz.io/projects/minesweeper/
