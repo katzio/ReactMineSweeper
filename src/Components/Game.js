@@ -1,7 +1,7 @@
 import React from 'react';
 import Controls from './Controls'
 import Grid from './Grid'
-
+/* eslint-disable */
 /**
  * Game component
  */
@@ -25,12 +25,12 @@ export default class Game extends React.Component{
 			superstate : false,
 			// size
 			rows : 20,
-			cols : 32,
+			cols : 20,
 			// mines
 			minesCount : 100,
 			flagsCount: 0,
 			openCellsCount: 0,
-			status : "playing"   // playing, clear, gameover
+			status : "playing"   // playing, clear, gameover, superman
 		}
 	}
 
@@ -38,13 +38,13 @@ export default class Game extends React.Component{
 		this.setState({
 			superstate: nextProps.superstate,
 			// size
-		rows : nextProps.row,
-		cols : nextProps.cols,
-		// mines
-		minesCount : nextProps.minesCount,
-		flagsCount: nextProps.flagsCount,
-		openCellsCount: nextProps.openCellsCount,
-		status : nextProps.status  // playing, clear, gameover
+			rows : nextProps.row-0,
+			cols : nextProps.cols-0,
+			// mines
+			minesCount : nextProps.minesCount-0,
+			flagsCount: nextProps.flagsCount-0,
+			openCellsCount: nextProps.openCellsCount-0,
+			status : nextProps.status  // playing, clear, gameover
 	});
 	}
 
@@ -53,7 +53,7 @@ export default class Game extends React.Component{
 	 * @return {[type]} [description]
 	 */
 	componentWillUpdate() {
-        if(this.state.status === "playing"){
+        if(this.state.status == "playing"){
             this.checkWin();
         }
     }
@@ -62,10 +62,12 @@ export default class Game extends React.Component{
      * @return {[type]} [description]
      */
     checkWin() {
-
-        if(this.state.rows * this.state.cols - this.state.minesCount === this.state.openCellsCount && this.state.minesCount == this.state.flagsCount){
-            this.setState({status: "clear"});
-        }
+    	var cells_to_open = this.state.rows * this.state.cols - this.state.minesCount;
+    	console.log(this.state.openCellsCount)
+    	console.log(this.state.flagsCount)
+    	if (cells_to_open == this.state.openCellsCount && this.state.flagsCount == this.state.minesCount){
+       		this.setState({status: "clear"});
+    	}
     }
     /**
      * [gameOver description]
@@ -81,9 +83,9 @@ export default class Game extends React.Component{
      * @return {[type]}        [description]
      */
     updateFlagsCounter(newCount) {
-    	if (newCount === -1)
+    	if (newCount == -1)
         	this.setState({flagsCount: --this.state.flagsCount });
-        if (newCount === 1)
+        if (newCount == 1)
         	this.setState({flagsCount: ++this.state.flagsCount });
     }
 
@@ -92,8 +94,7 @@ export default class Game extends React.Component{
      * @return {[type]} [description]
      */
     incOpenCellsCounter() {
-    	this.setState({openCellsCount :++this.state.openCellsCount})
-    	console.log(this.state.openCellsCount)
+    	this.setState({openCellsCount :++this.state.openCellsCount},)
     }
     /**
      * [reset description]
@@ -130,8 +131,7 @@ export default class Game extends React.Component{
      */
     superControl()
     {
-    	console.log("update")
-    	this.setState({superstate : true});
+    	this.setState({superstate : true, openCellsCount: this.state.rows * this.state.cols});
     }
 
 	/**

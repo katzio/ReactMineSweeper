@@ -1,5 +1,5 @@
 import React from 'react';
-
+/* eslint-disable */
 /**
  * 
  */
@@ -24,9 +24,9 @@ export default class Controls extends React.Component{
 	 */
 	setStateStyle(){
 
-		if(this.props.status === "clear")
+		if(this.props.status == "clear")
 			return "btn btn-md btn-success"
-		else if(this.props.status === "Game Over")
+		else if(this.props.status == "Game Over")
 			return "btn btn-md btn-danger"
 		return "btn btn-md btn-info"
 	}
@@ -35,9 +35,9 @@ export default class Controls extends React.Component{
 	 * @param {[type]} state [description]
 	 */
 	setStateText(){
-		if(this.props.status === "clear")
+		if(this.props.status == "clear")
 			return "You have won!"
-		else if(this.props.status === "Game Over")
+		else if(this.props.status == "Game Over")
 			return "You have lost!"
 		return "playing"
 	}
@@ -55,7 +55,18 @@ export default class Controls extends React.Component{
 	}
 
 	update(event){
-		this.props.setGrid(this.state.rows, this.state.cols, this.state.minesCount);
+
+			if (this.state.rows > 0 && this.state.cols > 0 && this.state.minesCount >= 0){
+				if (this.state.minesCount <= this.state.rows * this.state.cols ){
+					this.props.setGrid(this.state.rows, this.state.cols, this.state.minesCount);
+				}
+				else {
+					alert("to many mines!");
+				}
+			}
+			else {
+				alert("Negative values?");
+			}
 	}
 
 	render(){
@@ -85,15 +96,15 @@ export default class Controls extends React.Component{
 					<div className="row">
 						<div className="col-sm-3">
 							<span className="sr-only">Rows:</span>
-							<input class="form-control" is type="text" placeholder={rowsPlaceHolder} onChange={this.updateRows}/>
+							<input class="form-control" is type="text" value={this.state.rows} placeholder={rowsPlaceHolder} onChange={this.updateRows}/>
 						</div>
 						<div className="col-sm-3">
 							<span className="sr-only">Columns:</span>
-							<input class="form-control" is type="text" placeholder={colsPlaceHolder} onChange={this.updateCols}/>
+							<input class="form-control" is type="text" value={this.state.cols} placeholder={colsPlaceHolder} onChange={this.updateCols}/>
 						</div>
 						<div className="col-sm-3">
 							<span className="sr-only">Mines:</span>
-							<input class="form-control" is type="text" placeholder={minesPlaceHolder}  onChange={this.updateMines}/>
+							<input class="form-control" is type="text" value={this.state.minesCount} placeholder={minesPlaceHolder}  onChange={this.updateMines}/>
 						</div>
 						<div className="col-sm-3">
 							<button className="btn btn-md btn-info" onClick={this.update}>Update Grid Params</button>

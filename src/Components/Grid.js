@@ -2,6 +2,8 @@ import React from 'react';
 import ReactList from 'react-list';
 import Loader from 'react-loader';
 import Row from './Row';
+
+/* eslint-disable */
 /**
  * Grid component
  */
@@ -34,14 +36,12 @@ export default class Grid extends React.Component{
 	 */
 	superMan(){
 		var _grid = this.state.grid;
-
 		for (var row = 0; row < this.props.rows; row++){
 			for (var col = 0; col < this.props.cols; col++){
 				_grid[row][col].isOpen = true;
-
-		this.setState ({grid: _grid});
 			}
 		}
+		this.setState ({grid: _grid});
 	}
 
 	componentDidMount(){
@@ -110,6 +110,7 @@ export default class Grid extends React.Component{
 	 * @return {[type]}       [description]
 	 */
 	openCell(_cell){	
+		console.log(this.props.openCellsCount);
 		var _grid = this.state.grid;
 		if (!_cell.flagged && this.props.status !== "Game Over"){
 			// show mine incon
@@ -125,7 +126,7 @@ export default class Grid extends React.Component{
 			} else {
 				this.props.incOpenCellsCounter();
 				_grid[_cell.row_id][_cell.col_id].isOpen = true;
-				if (_cell.minesCount === 0){
+				if (_cell.minesCount == 0){
 					this.openAround(_cell);				
 				}
 			}	
@@ -153,7 +154,7 @@ export default class Grid extends React.Component{
 				{
 					_grid[row][col].isOpen = true;	
 					this.props.incOpenCellsCounter();
-					if(_grid[row][col].minesCount === 0){
+					if(_grid[row][col].minesCount == 0){
 						this.state.zero_stack.push(_grid[row][col]);
 					}
 
@@ -202,7 +203,7 @@ export default class Grid extends React.Component{
     componentWillReceiveProps(nextProps) {
     	if(nextProps.superstate)
     		this.superMan();
-        if((this.props.openCellsCount > nextProps.openCellsCount || this.props.cols !== nextProps.cols || this.props.rows !== nextProps.rows || this.props.minesCount !== nextProps.minesCount) && this.state.loaded === true){
+        if((this.props.openCellsCount > nextProps.openCellsCount || this.props.cols !== nextProps.cols || this.props.rows !== nextProps.rows || this.props.minesCount !== nextProps.minesCount) && this.state.loaded == true){
             this.setState({
                 grid : this.build(nextProps),
                 zero_stack : []

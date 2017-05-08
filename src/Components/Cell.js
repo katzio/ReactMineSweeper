@@ -1,5 +1,5 @@
 import React from 'react';
-
+/* eslint-disable */
 /**
  * Cell component
  */
@@ -54,7 +54,7 @@ export default class Cell extends React.Component{
         if(this.state.isOpen){
             if(this.state.isMine){return (<div className="table-cell mine"></div>);}
             else {
-                if (this.state.minesCount === 0){
+                if (this.state.minesCount == 0){
                     return (<div className="table-cell activated"></div>);
                 }return (<div className="table-cell activated" is data-neighbors={this.state.minesCount}>{this.state.minesCount}</div>);
             }
