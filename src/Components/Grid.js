@@ -238,7 +238,7 @@ export default class Grid extends React.Component{
 				<Loader loaded={this.state.loaded}>
 					<ReactList
 					itemRenderer={this.renderItem}
-					length={this.props.rows * this.props.rows.cols}
+					length={this.props.rows * this.props.cols}
 					type='uniform'
 					useTranslate3d={true} />
 				</Loader>
