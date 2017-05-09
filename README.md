@@ -4,4 +4,4 @@
  \> npm install
  \> npm start
  ```
-http://akatz.io/projects/minesweeper/
+https://katzio.github.io/react-Minesweeper/

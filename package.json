@@ -2,7 +2,7 @@
   "name": "react-minesweeper-v2",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://akatz.io/projects/minesweeper/",
+  "homepage": "https://katzio.github.io/react-Minesweeper/",
   "dependencies": {
     "react": "^15.5.4",
     "react-clusterize": "^0.2.1",
