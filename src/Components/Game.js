@@ -22,6 +22,7 @@ export default class Game extends React.Component{
 		this.superControl = this.superControl.bind(this);
 
 		this.state = {
+			loaded : false,
 			superstate : false,
 			// size
 			rows : 20,
@@ -103,7 +104,8 @@ export default class Game extends React.Component{
         	status: "playing", 
         	flagsCount: 0, 
         	openCellsCount: 0, 
-        	superstate: false
+        	superstate: false,
+        	loaded : false
         });
     }
 
@@ -115,6 +117,7 @@ export default class Game extends React.Component{
      */
     setGrid(_rows,_cols,_minesCount) {
             this.setState({
+            loaded: false,
         	rows: _rows, 
         	cols: _cols, 
         	minesCount: _minesCount, 
@@ -155,7 +158,7 @@ export default class Game extends React.Component{
 		<div className="row">
 			<div className="col-sm-12">
 				<Grid 
-					loaded={false}
+					loaded={this.state.loaded}
 					rows={this.state.rows} 
 					cols={this.state.cols}
 					openCellsCount={this.state.openCellsCount} 
