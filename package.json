@@ -2,7 +2,7 @@
   "name": "wixMineSweeper",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://katzio.github.io/wixMinesweeper/",
+  "homepage": "https://katzio.github.io/wixMineSweeper/",
   "dependencies": {
     "react": "^15.5.4",
     "react-clusterize": "^0.2.1",
