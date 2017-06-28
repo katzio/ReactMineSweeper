@@ -4,4 +4,4 @@
  \> npm install
  \> npm start
  ```
-https://katzio.github.io/wixMinesweeper/
+https://katzio.github.io/wixMineSweeper/
